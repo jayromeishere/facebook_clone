@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
          :omniauthable
 
   has_many :friend_requests, 
+    class_name: "FriendRequest",
+    foreign_key: "requester_id",
     dependent: :destroy
   has_many :friends, 
     through: :friend_requests, 
