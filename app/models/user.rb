@@ -1,16 +1,20 @@
 class User < ActiveRecord::Base
-  validates :name,
-    presence: true, 
-    length: { minimum: 3 }
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable
+
   has_many :friend_requests, 
     dependent: :destroy
-  has_many :friendships, 
+  has_many :friends, 
     through: :friend_requests, 
     source: :requested
 
   
-  def self.accept_request(id)
+  def self.accept_friend_request(id)
     self.friend_requests.find_by(id).accepted = true
   end
   
 end
+
