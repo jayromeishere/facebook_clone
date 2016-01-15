@@ -1,8 +1,24 @@
 <h1>Profile for User <%= @user.id %></h1>
 
 <% if current_user.id != @user.id %>
-	<%= link_to "Send Friend Request", user_friend_requests_url(@user.id), 
-									   method: :post %>
+	<% if current_user.has_active_friend_request_pending_with(@user.id) %>
+		<%= "Friend request pending." %>
+	<% else %>
+		<%= link_to "Send Friend Request", user_friend_requests_url(@user.id), 
+										   method: :post %>
+    <% end %>
+<% else %>
+	<% if @user.has_passive_friend_requests_pending %>
+		<%= pluralize(@user.passive_friend_requests.pending.count, 'Friend Request') + " pending." %></br>
+		<ul>
+		<% @user.passive_friend_requests.pending.each do |request| %>
+			<li>
+			<%= request.requester.name %>
+			<%= link_to "Accept?", user_friend_request_url(@user.id, request.requester_id), method: :update %>
+			</li>
+		<% end %>
+		</ul>
+	<% end %>
 <% end %>
 	
  

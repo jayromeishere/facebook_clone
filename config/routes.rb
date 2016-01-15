@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'static_pages#welcome'
   resources :users do 
-    resources :friend_requests, except: [:edit, :update]
+    resources :friend_requests, except: [:edit]
   end
   resource :feed, only: [:show]
 

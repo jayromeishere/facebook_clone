@@ -18,8 +18,12 @@ class User < ActiveRecord::Base
     source: :requested
 
   
-  def self.accept_friend_request(id)
-    self.friend_requests.find_by(id).accepted = true
+  def has_active_friend_request_pending_with(requested_id)
+    active_friend_requests.where("requested_id = ?", requested_id).pending != nil
+  end
+  
+  def has_passive_friend_requests_pending
+    passive_friend_requests.pending.count > 0
   end
   
 end
