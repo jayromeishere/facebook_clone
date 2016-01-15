@@ -5,9 +5,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable
 
-  has_many :friend_requests, 
+  has_many :active_friend_requests, 
     class_name: "FriendRequest",
     foreign_key: "requester_id",
+    dependent: :destroy
+  has_many :passive_friend_requests, 
+    class_name: "FriendRequest",
+    foreign_key: "requested_id",
     dependent: :destroy
   has_many :friends, 
     through: :friend_requests, 

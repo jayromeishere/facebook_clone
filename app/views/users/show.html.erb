@@ -1,5 +1,8 @@
 <h1>Profile for User <%= @user.id %></h1>
 
-<% link_to "Send Friend Request", user_friend_requests_url, method: :post if current_user.id != @user.id  %>
+<% if current_user.id != @user.id %>
+	<%= link_to "Send Friend Request", user_friend_requests_url(@user.id), 
+									   method: :post %>
+<% end %>
 	
  
