@@ -1,7 +1,7 @@
 <h1>Profile for User <%= @user.id %></h1>
 
 <% if current_user.id != @user.id %>
-	<h3><%= "#{@user.name} has " + pluralize(@user.passive_friend_requests.accepted.count, 'friend') + "." %></h3>
+	<h3><%= "#{@user.name} has " + pluralize(@user.friend_requests.accepted.count, 'friend') + "." %></h3>
 	<% if current_user.has_active_friend_request_pending_with?(@user) %>
 		<%= "Friend request pending." %>
 	<% elsif current_user.is_friends_with?(@user) %>

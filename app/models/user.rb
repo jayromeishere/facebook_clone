@@ -13,9 +13,8 @@ class User < ActiveRecord::Base
     class_name: "FriendRequest",
     foreign_key: "requested_id",
     dependent: :destroy
-  has_many :friends, 
-    through: :friend_requests, 
-    source: :requested
+  has_many :friend_requests,
+    foreign_key: "requester_id"
 
   
   def has_active_friend_request_pending_with?(user)
