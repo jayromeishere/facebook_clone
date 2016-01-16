@@ -18,12 +18,17 @@ class User < ActiveRecord::Base
     source: :requested
 
   
-  def has_active_friend_request_pending_with(requested_id)
-    active_friend_requests.where("requested_id = ?", requested_id).pending != nil
+  def has_active_friend_request_pending_with?(user)
+    active_friend_requests.where("requested_id = ?", user.id).pending == User.none ? false : true
+    # User.none = empty ActiveRecord association
   end
   
-  def has_passive_friend_requests_pending
-    passive_friend_requests.pending.count > 0
+  def has_passive_friend_requests_pending?
+    passive_friend_requests.pending.count > 0 ? true : false 
+  end
+  
+  def is_friends_with?(requested)
+    active_friend_requests.where("requested_id = ?", requested.id).accepted != User.none ? true : false 
   end
   
 end

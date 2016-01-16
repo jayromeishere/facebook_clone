@@ -5,7 +5,7 @@ require 'rails_helper'
 
 feature "User Login" do
   background do
-    user = create(:user)
+    user = create(:user, email: "email_1@foobar.com", password: "password")
   end 
   
   scenario "successful" do    
