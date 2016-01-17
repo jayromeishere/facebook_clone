@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :users do 
     resources :friend_requests, except: [:edit]
   end
-  resource :feed, only: [:show]
+  get '/feed' => 'static_pages#feed'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

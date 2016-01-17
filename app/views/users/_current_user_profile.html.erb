@@ -1,0 +1,14 @@
+<h1>Your Profile</h1>
+<h3><%= "You have " + 
+	pluralize(friends_count(current_user), 'friend') + "." %></h3>
+<% if current_user.has_passive_friend_requests_pending? %>
+	<%= pluralize(current_user.passive_friend_requests.pending.count, 'Friend Request') + " pending." %></br>
+	<ul>
+	<% current_user.passive_friend_requests.pending.each do |request| %>
+		<li>
+		<%= request.requester.name %>
+		<%= link_to "Accept?", user_friend_request_url(current_user.id, request.requester_id), method: :patch %>
+		</li>
+	<% end %>
+	</ul>
+<% end %>
