@@ -22,12 +22,12 @@ class User < ActiveRecord::Base
     # User.none = empty ActiveRecord association
   end
   
-  def has_passive_friend_requests_pending?
-    passive_friend_requests.pending.count > 0 ? true : false 
+  def has_passive_friend_request_pending_with?(current_user)
+    passive_friend_requests.where("requester_id = ?", current_user.id).pending == User.none ? false : true 
   end
   
-  def is_friends_with?(requested)
-    active_friend_requests.where("requested_id = ?", requested.id).accepted != User.none ? true : false 
+  def has_passive_friend_requests_pending?
+    passive_friend_requests.pending.count > 0 ? true : false 
   end
   
 end

@@ -16,6 +16,20 @@ feature "Friend Requests" do
     expect(page).to have_content "Friend Request Sent!"
   end
   
+  scenario "upon receiving friend request, REQUESTED sees 'pending' on REQUESTER's profile" do
+    send_friend_request(@requester, @requested)
+    sign_out
+    sign_in(@requested)
+    visit user_path(@requester)
+    expect(page).to have_content 'pending'   
+  end
+
+  scenario "upon sending friend request, REQUESTER sees 'pending' on REQUESTED's profile" do
+    send_friend_request(@requester, @requested)
+    visit user_path(@requested)
+    expect(page).to have_content 'pending'
+  end  
+  
   scenario "requested user accepts requester's friend request" do
     send_friend_request(@requester, @requested)
     sign_out
@@ -23,6 +37,9 @@ feature "Friend Requests" do
     visit user_path(@requested)
     click_link 'Accept?'
     expect(page).to have_content "Friend Request Accepted!"
+    expect(page).to have_content '1 friend'
+    visit user_path(@requester)
+    expect(page).to have_content '1 friend'
   end
   
   scenario "when user 1 sends user 2 a Friend Request, user 3's page doesn't say 'FR pending' " do
@@ -32,5 +49,6 @@ feature "Friend Requests" do
     visit user_path(@other_user)
     expect(page).to_not have_content "Friend Request pending"
   end
+  
   
 end

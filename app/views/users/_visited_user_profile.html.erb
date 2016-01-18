@@ -1,10 +1,12 @@
 <h1>Profile for User <%= @user.id %></h1>
 <h3><%= "#{@user.name} has " + 
 	pluralize(friends_count(@user), 'friend') + "." %></h3>
-<% if current_user.has_active_friend_request_pending_with?(@user) %>
+<% if friend_request_pending_between?(current_user, @user) %>
 	<%= "Friend request pending." %>
-<% elsif current_user.is_friends_with?(@user) %>
+<% elsif are_friends?(current_user, @user) %>
 	<%= "You and #{@user.name} are friends." %>
+	<%= link_to "Unfriend?", #user_friend_request_path(current_user.id, @user.id), 
+		method: :patch, data: { confirm: "Are you sure?" } %>
 <% else %>
 	<%= link_to "Send Friend Request", user_friend_requests_url(@user.id), method: :post %>
 <% end %>

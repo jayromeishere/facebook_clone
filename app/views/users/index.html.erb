@@ -1,0 +1,16 @@
+<h1>All Users</h1>
+<%= "User #{current_user.id} is logged in." %></br></br>
+<ul>
+<% @users.each do |user| %>
+	<%= "User #{user.id} has " + pluralize(friends_count(user),'friend') + ":" %>
+	<ul>
+	<% user.active_friend_requests.accepted.each do |request| %>
+		<li><%= request.requested.name %></li>
+	<% end %>
+	<% user.passive_friend_requests.accepted.each do |request| %>
+		<li><%= request.requester.name %></li>
+	<% end %>
+	</ul>
+<% end %>
+</ul>
+
