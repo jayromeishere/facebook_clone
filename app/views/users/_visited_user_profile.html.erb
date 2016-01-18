@@ -5,8 +5,8 @@
 	<%= "Friend request pending." %>
 <% elsif are_friends?(current_user, @user) %>
 	<%= "You and #{@user.name} are friends." %>
-	<%= link_to "Unfriend?", #user_friend_request_path(current_user.id, @user.id), 
-		method: :patch, data: { confirm: "Are you sure?" } %>
+	<%= link_to "Unfriend?", user_friend_request_path(current_user.id, @user.id), 
+		method: :delete, data: { confirm: "Are you sure?" } %>
 <% else %>
 	<%= link_to "Send Friend Request", user_friend_requests_url(@user.id), method: :post %>
 <% end %>

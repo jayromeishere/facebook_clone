@@ -15,13 +15,17 @@ class FriendRequestsController < ApplicationController
     @requested_user = User.find(params[:user_id])
     @requester = User.find(params[:id])
     @friend_request = @requested_user.passive_friend_requests.where("requester_id = ?", @requester.id).last
-    if @friend_request.accepted == false
-      accept_friend_request
-      redirect_to @requested_user, notice: "Friend Request Accepted!" 
-    else
-      unfriend
-      redirect_to @requested_user, notice: "You are no longer friends with #{requester.name}."
-    end  
+    accept_friend_request
+    redirect_to @requested_user, notice: "Friend Request Accepted!" 
+  end
+  
+  def destroy
+    @user_1 = User.find(params[:user_id])
+    @user_2 = User.find(params[:id])
+    @friend_request = friend_request_to_destroy
+    @friend_request[0].destroy
+    # friend_request_to_destroy should return one element array (relation) 
+    redirect_to user_path(current_user), notice: "You are no longer friends with #{@user_2.name}."
   end
   
   private
@@ -31,9 +35,10 @@ class FriendRequestsController < ApplicationController
       @friend_request.save
     end
     
-    def unfriend
-      @friend_request.accepted = false
-      @friend_request.save
+    def friend_request_to_destroy
+      active_request = @user_1.active_friend_requests.accepted.where("requested_id = ?", @user_2.id)
+      passive_request = @user_1.passive_friend_requests.accepted.where("requester_id = ?", @user_2.id)
+      active_request == User.none ? passive_request : active_request
     end
 
     

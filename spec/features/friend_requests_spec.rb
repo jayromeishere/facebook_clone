@@ -50,5 +50,10 @@ feature "Friend Requests" do
     expect(page).to_not have_content "Friend Request pending"
   end
   
+  scenario "friend request successfully deleted" do
+    accept_friend_request(@requester, @requested)
+    visit user_path(@requester)
+    expect{click_link 'Unfriend?'}.to change(FriendRequest, :count).by(-1)
+  end
   
 end
