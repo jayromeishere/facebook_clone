@@ -1,5 +1,4 @@
 class FriendRequestsController < ApplicationController
-  include ActiveModel::Dirty
   
   def create
     @requested_user = User.find(params[:user_id])

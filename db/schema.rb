@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114220402) do
+ActiveRecord::Schema.define(version: 20160119012000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "commenter_id"
+    t.integer  "post_id"
+    t.text     "text"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "friend_requests", force: :cascade do |t|
     t.integer  "requester_id"
@@ -22,6 +30,21 @@ ActiveRecord::Schema.define(version: 20160114220402) do
     t.boolean  "accepted",     default: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "recipient_id"
+    t.string   "source_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "source_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer  "poster_id"
+    t.text     "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -15,7 +15,11 @@ class User < ActiveRecord::Base
     dependent: :destroy
   has_many :friend_requests,
     foreign_key: "requester_id"
+  has_many :notifications, 
+    class_name: "Notification",
+    foreign_key: "recipient_id"
 
+  # methods with respect to current_user 
   
   def has_active_friend_request_pending_with?(user)
     active_friend_requests.where("requested_id = ?", user.id).pending == User.none ? false : true
@@ -29,6 +33,6 @@ class User < ActiveRecord::Base
   def has_passive_friend_requests_pending?
     passive_friend_requests.pending.count > 0 ? true : false 
   end
-  
+   
 end
 

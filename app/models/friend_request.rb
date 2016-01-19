@@ -12,6 +12,9 @@ class FriendRequest < ActiveRecord::Base
     class_name: "User"
   belongs_to :requested, 
     class_name: "User"
+  has_many :passive_notifications,
+    as: :source, 
+    class_name: "Notifications"
     
   scope :pending, -> { where(accepted: false) }
   scope :accepted, -> { where(accepted: true) }
