@@ -14,10 +14,14 @@ class User < ActiveRecord::Base
     foreign_key: "requested_id",
     dependent: :destroy
   has_many :friend_requests,
-    foreign_key: "requester_id"
+    through: :notifications,
+    source: :source,
+    source_type: "FriendRequest",
+    dependent: :destroy
   has_many :notifications, 
-    class_name: "Notification",
-    foreign_key: "recipient_id"
+    foreign_key: "recipient_id",
+    dependent: :destroy
+
 
   # methods with respect to current_user 
   

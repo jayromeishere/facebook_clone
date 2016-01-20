@@ -9,7 +9,7 @@ feature "Notifications" do
   end
   
   scenario "current user receives one upon receiving a friend request" do
-    send_friend_request(@requester, @requested)
+    expect{send_friend_request(@requester, @requested)}.to change(Notification, :count).by(1)
     sign_out
     sign_in(@requested)
     expect(page).to have_content "1 new notification"

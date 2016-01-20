@@ -12,11 +12,13 @@ class FriendRequest < ActiveRecord::Base
     class_name: "User"
   belongs_to :requested, 
     class_name: "User"
-  has_many :passive_notifications,
+  belongs_to :users
+    # plural, for polymorphic association
+  has_one :notification,
     as: :source, 
-    class_name: "Notifications"
+    dependent: :destroy
     
   scope :pending, -> { where(accepted: false) }
   scope :accepted, -> { where(accepted: true) }
-  
+
 end

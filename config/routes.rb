@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :friend_requests, except: [:edit]
   end
   get '/feed' => 'static_pages#feed'
+  get '/notifications' => 'static_pages#notifications'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

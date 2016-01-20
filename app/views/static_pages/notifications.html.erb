@@ -1,0 +1,9 @@
+<h1>My Notifications</h1>
+
+<% current_user.notifications.each do |notification| %>
+	<% if notification.source_type == 'friend_request' %>
+		<%= "person's name sent you a friend request." %>
+	<% end %>
+	<% notification.seen = true %>
+<% end %>
+
