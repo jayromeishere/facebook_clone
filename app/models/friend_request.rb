@@ -12,9 +12,7 @@ class FriendRequest < ActiveRecord::Base
     class_name: "User"
   belongs_to :requested, 
     class_name: "User"
-  belongs_to :users
-    # plural, for polymorphic association
-  has_one :notification,
+  has_many :notifications,
     as: :source, 
     dependent: :destroy
     

@@ -33,5 +33,8 @@ module FacebookClone
             request_specs: false
         g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
+    
+    # include observers
+    config.active_record.observers = :friend_request_observer
   end
 end

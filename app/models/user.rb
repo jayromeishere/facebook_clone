@@ -9,18 +9,14 @@ class User < ActiveRecord::Base
     class_name: "FriendRequest",
     foreign_key: "requester_id",
     dependent: :destroy
-  has_many :passive_friend_requests, 
+  has_many :passive_friend_requests,
     class_name: "FriendRequest",
     foreign_key: "requested_id",
-    dependent: :destroy
-  has_many :friend_requests,
-    through: :notifications,
-    source: :source,
-    source_type: "FriendRequest",
     dependent: :destroy
   has_many :notifications, 
     foreign_key: "recipient_id",
     dependent: :destroy
+
 
 
   # methods with respect to current_user 

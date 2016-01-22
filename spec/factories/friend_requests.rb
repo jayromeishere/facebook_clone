@@ -3,6 +3,7 @@ FactoryGirl.define do
     # use association to designate 'belongs to' relationships 
     association :requester, factory: :user
     association :requested, factory: :user
+   
     
     requester_id 1
     requested_id 2

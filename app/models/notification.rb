@@ -7,7 +7,7 @@ class Notification < ActiveRecord::Base
     inclusion: { in: ["Comment", "Like", "FriendRequest"] }
     
   belongs_to :source, 
-    polymorphic: true 
+    polymorphic: true
   belongs_to :recipient,
     class_name: "User"
     
