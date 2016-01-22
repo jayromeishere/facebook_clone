@@ -15,4 +15,21 @@ feature "Notifications" do
     expect(page).to have_content "1 new notification"
   end
   
+  scenario "friend request notification flagged as seen after user visits notifications page" do
+    accept_friend_request(@requester, @requested)
+    sign_out
+    sign_in(@requested)
+    visit notifications_path
+    expect(@requested.notifications.last.seen).to eql true
+  end
+  
+  scenario "return to zero when user exits notification page" do
+    accept_friend_request(@requester, @requested)
+    sign_out
+    sign_in(@requested)
+    visit notifications_path
+    visit user_path(@requested)
+    expect(page).to have_content "No new notifications."
+  end
+  
 end

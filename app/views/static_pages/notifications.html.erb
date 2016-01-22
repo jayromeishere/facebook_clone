@@ -1,9 +1,11 @@
 <h1>My Notifications</h1>
 
-<% current_user.notifications.each do |notification| %>
-	<% if notification.source_type == 'friend_request' %>
-		<%= "person's name sent you a friend request." %>
+<% current_user.notifications.unseen.each do |notification| %>
+	<% if notification.source_type == "FriendRequest" %>
+		<%= "#{notification.sender.name.titleize} sent you a friend request." %>
+		<%= link_to "Accept?", user_friend_request_url(current_user.id, notification.sender_id), method: :patch %>
 	<% end %>
 	<% notification.seen = true %>
+	<% notification.save %>
 <% end %>
 

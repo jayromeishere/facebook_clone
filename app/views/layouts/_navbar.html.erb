@@ -1,5 +1,9 @@
 <% if user_signed_in? %>
 <header id="navbar" style="text-align: right;">
-	<span id="navbar_notifs" ><%= notification_count %></span>
+	<span id="navbar_notifs"><%= notification_count %></span>
+	<% if current_user.notifications.unseen.count > 0 %>
+		<span id="navbar_view"><%= link_to "View", notifications_path %></span>
+	<% end %>
+	<span id="navbar_sign_out"><%= link_to "Sign Out", destroy_user_session_url, method: :delete %></span>
 </header>
 <% end %>

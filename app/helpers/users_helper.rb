@@ -15,7 +15,9 @@ module UsersHelper
   end
   
   def notification_count
-    current_user.notifications.count == 0 ? "No new notifications." : "#{current_user.notifications.count} new notifications."
+    current_user.notifications.unseen.count == 0 ? 
+      "No new notifications." : 
+      "#{current_user.notifications.unseen.count} new notifications."
   end
  
 end
