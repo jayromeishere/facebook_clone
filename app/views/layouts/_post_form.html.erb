@@ -1,0 +1,8 @@
+<h2>Write a New Post</h2>
+<%= form_tag(user_posts_path(current_user), method: :post) do %>
+	<%= hidden_field :post, :poster_id, value: current_user.id %>
+	<div id="post_form">
+		<%= text_area :post, :text, size: "50x5" %>
+	</div></br>
+	<%= submit_tag "Post Now" %> 
+<% end %>

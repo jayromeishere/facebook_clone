@@ -16,6 +16,9 @@ class User < ActiveRecord::Base
   has_many :notifications, 
     foreign_key: "recipient_id",
     dependent: :destroy
+  has_many :posts,
+    foreign_key: "poster_id",
+    dependent: :destroy
 
 
 
