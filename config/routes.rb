@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   root 'static_pages#welcome'
   resources :users do 
     resources :friend_requests, except: [:edit]
-    resources :posts, only: [:new, :create, :update, :destroy]
+    resources :posts do
+      resources :comments, except: [:index]
+    end
   end
   get '/feed' => 'static_pages#feed'
   get '/notifications' => 'static_pages#notifications'

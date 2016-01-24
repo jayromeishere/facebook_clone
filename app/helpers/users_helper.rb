@@ -19,5 +19,10 @@ module UsersHelper
       "No new notifications." : 
       "#{current_user.notifications.unseen.count} new notifications."
   end
+  
+  def friends(user)
+    user.friends_from_active_requests |
+    user.friends_from_passive_requests
+  end
  
 end

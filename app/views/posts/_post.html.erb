@@ -1,0 +1,4 @@
+<%= post.poster.name %></br>
+<%= post.text %></br>
+<%= link_to "Like", "#" %>
+<%= link_to "Comment", new_user_post_comment_path(post.poster_id, post.id), method: :get %></br>

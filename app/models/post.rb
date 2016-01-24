@@ -7,6 +7,8 @@ class Post < ActiveRecord::Base
     
   belongs_to :poster, 
     class_name: "User"
+  has_many :comments, 
+    dependent: :destroy
   
 
 end

@@ -1,0 +1,6 @@
+<%= form_tag(user_post_comments_path(params[:user_id], params[:post_id]), method: :post) do %>
+	<%= hidden_field :comment, :commenter_id, value: current_user.id %>
+	<%= hidden_field :comment, :post_id, value: params[:post_id] %>
+	<%= text_area :comment, :text, size: "50x5" %></br>
+	<%= submit_tag "Submit" %>
+<% end %>
