@@ -16,7 +16,7 @@ feature "Notifications" do
   end
   
   scenario "friend request notification flagged as seen after user visits notifications page" do
-    accept_friend_request(@requester, @requested)
+    accept_friend_request_from_profile(@requester, @requested)
     sign_out
     sign_in(@requested)
     visit notifications_path
@@ -24,7 +24,7 @@ feature "Notifications" do
   end
   
   scenario "when a friend comments on user's post, user's notif page says friend commented on it" do
-    accept_friend_request(@requester, @requested) #requested still logged in after friend request is accepted
+    accept_friend_request_from_profile(@requester, @requested) #requested still logged in after friend request is accepted
     post = @requester.posts.create(attributes_for(:post))
     comment_on(post)
     sign_out
@@ -33,8 +33,22 @@ feature "Notifications" do
     expect(page).to have_content "Bert commented on your post."
   end
   
+  scenario "when user accepts friend request on profile page, notification goes away" do
+    accept_friend_request_from_profile(@requester, @requested)
+    visit notifications_path
+    expect(page).to_not have_content "Jerome sent you a friend request."
+  end
+  
+  scenario "when user comments on his own post, user DOESN'T receive notification" do
+    accept_friend_request_from_profile(@requester, @requested) 
+    post = @requested.posts.create(attributes_for(:post))
+    comment_on(post)  
+    visit notifications_path
+    expect(page).to_not have_content "Bert commented on your post."
+  end
+  
   scenario "return to zero when user exits notification page" do
-    accept_friend_request(@requester, @requested)
+    accept_friend_request_from_profile(@requester, @requested)
     sign_out
     sign_in(@requested)
     visit notifications_path

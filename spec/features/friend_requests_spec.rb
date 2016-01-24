@@ -51,7 +51,7 @@ feature "Friend Requests" do
   end
   
   scenario "friend request successfully deleted" do
-    accept_friend_request(@requester, @requested)
+    accept_friend_request_from_profile(@requester, @requested)
     visit user_path(@requester)
     expect{click_link 'Unfriend?'}.to change(FriendRequest, :count).by(-1)
   end
