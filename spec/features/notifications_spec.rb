@@ -23,6 +23,16 @@ feature "Notifications" do
     expect(@requested.notifications.last.seen).to eql true
   end
   
+  scenario "when a friend comments on user's post, user's notif page says friend commented on it" do
+    accept_friend_request(@requester, @requested) #requested still logged in after friend request is accepted
+    post = @requester.posts.create(attributes_for(:post))
+    comment_on(post)
+    sign_out
+    sign_in(@requester)
+    visit notifications_path
+    expect(page).to have_content "Bert commented on your post."
+  end
+  
   scenario "return to zero when user exits notification page" do
     accept_friend_request(@requester, @requested)
     sign_out

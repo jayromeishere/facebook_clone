@@ -55,7 +55,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   
+  # add to prevent having to type FactoryGirl before each instance of factory
   config.include FactoryGirl::Syntax::Methods
-  config.include LoginMacros
-  config.include FriendRequestMacros
+  
+  # add to include macros of the corresponding name (module in snake case.rb) in spec/support
+  config.include Macros
+
 end

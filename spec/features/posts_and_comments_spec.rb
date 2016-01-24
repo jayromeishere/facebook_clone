@@ -23,17 +23,12 @@ feature "Posts and Comments" do
   
   scenario "Comment model increases by 1 after commenter comments on a user's post" do
     sign_in(@commenter)
-    click_link "Comment"
-    fill_in 'comment[text]', with: "sample text"
-    expect{click_button "Submit"}.to change(Comment, :count).by(1)
+    expect{comment_on(@post)}.to change(Comment, :count).by(1)
   end
   
   scenario "Post poster receives a notification when commenter comments on their post" do
     sign_in(@commenter)
-    visit user_post_path(@user.id, @post.id)
-    click_link "Comment"
-    fill_in 'comment[text]', with: "sample text"
-    expect{click_button "Submit"}.to change{@user.notifications.count}.by(1)
+    expect{comment_on(@post)}.to change{@user.notifications.count}.by(1)
     # note hash after change matcher 
   end
   

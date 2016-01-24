@@ -4,6 +4,9 @@
 	<% if notification.source_type == "FriendRequest" %>
 		<%= "#{notification.sender.name.titleize} sent you a friend request." %>
 		<%= link_to "Accept?", user_friend_request_url(current_user.id, notification.sender_id), method: :patch %>
+	<% elsif notification.source_type == "Comment" %>
+		<%= "#{notification.sender.name.titleize} commented on your post." %>
+		<%= link_to "View Comment", user_post_path(current_user.id, notification.source.post_id), method: :get %>
 	<% end %>
 	<% notification.seen = true %>
 	<% notification.save %>
