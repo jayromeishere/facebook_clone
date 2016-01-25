@@ -8,7 +8,10 @@ Rails.application.routes.draw do
   resources :users do 
     resources :friend_requests, except: [:edit]
     resources :posts do
-      resources :comments, except: [:index]
+      resources :likes, only: [:create, :destroy]
+      resources :comments, except: [:index] do
+        resources :likes, only: [:create, :destroy]
+      end
     end
   end
   get '/feed' => 'static_pages#feed'

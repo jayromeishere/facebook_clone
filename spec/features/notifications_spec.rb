@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Notifications" do
-   background do
+  background do
     # use create to persist users in database
     @requester = create(:user, id: 1, name: "Jerome", email: "email_1@foobar.com", password: "password")
     @requested = create(:user, id: 2, name: "Bert", email: "email_2@foobar.com", password: "password")

@@ -1,17 +1,20 @@
 <h1>My Notifications</h1>
 
-<% current_user.notifications.unseen.each do |notification| %>
+<% current_user.notifications.unseen.order(created_at: :desc).each do |n| %>
 
-	<% if notification.source_type == "FriendRequest" && notification.source.accepted == false %>
-		<%= "#{notification.sender.name.titleize} sent you a friend request." %>
-		<%= link_to "Accept?", user_friend_request_url(current_user.id, notification.sender_id), method: :patch %>
+	<% if n.source_type == "FriendRequest" && n.source.accepted == false %>
+		<%= "#{n.sender.name.titleize} sent you a friend request." %>
+		<%= link_to "Accept?", user_friend_request_url(current_user.id, n.sender_id), method: :patch %>
 		
-	<% elsif notification.source_type == "Comment" && notification.source.commenter_id != current_user.id %>
-		<%= "#{notification.sender.name.titleize} commented on your post." %>
-		<%= link_to "View Comment", user_post_path(current_user.id, notification.source.post_id), method: :get %>
+	<% elsif n.source_type == "Comment" && n.source.commenter_id != current_user.id %>
+		<%= "#{n.sender.name.titleize} commented on your post." %>
+		<%= link_to "View Comment", user_post_path(current_user.id, n.source.post_id), method: :get %>
+		
+	<% elsif n.source_type == "Like" && n.source.liker_id != current_user.id %>
+		<%= "#{n.sender.name.titleize} liked your #{n.source.likeable_type.downcase}." %>
 		
 	<% end %>
-	<% notification.seen = true %>
-	<% notification.save %>
+	<% n.seen = true %>
+	<% n.save %>
 <% end %>
 

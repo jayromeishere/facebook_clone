@@ -1,5 +1,5 @@
 <li>
-	<%= comment.commenter.name %></br>
+	<%= comment.commenter.name %><%= " " %><%= comment.created_at %></br>
 	<%= comment.text %>
-	<%= link_to "Like", "#" %>
+	<%= link_to "Like", user_post_comment_likes_path(params[:user_id], params[:id], comment.id), method: :create %>
 </li>

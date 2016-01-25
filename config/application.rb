@@ -35,6 +35,6 @@ module FacebookClone
     end
     
     # include observers
-    config.active_record.observers = :friend_request_observer, :comment_observer
+    config.active_record.observers = :friend_request_observer, :comment_observer, :like_observer
   end
 end

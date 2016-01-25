@@ -23,17 +23,19 @@ class User < ActiveRecord::Base
     class_name: "Comment",
     foreign_key: "commenter_id",
     dependent: :destroy
+  has_many :likes,
+    dependent: :destroy
     
   has_many :friends_from_active_requests, -> (user) { where("friend_requests.accepted = ?", true) },
     through: :active_friend_requests,
     source: :requested,
-    class_name: "User",
-    dependent: :destroy
+    class_name: "User"
+
   has_many :friends_from_passive_requests, -> (user) { where("friend_requests.accepted = ?", true) },
     through: :passive_friend_requests, 
     source: :requester,
-    class_name: "User",
-    dependent: :destroy
+    class_name: "User"
+
 
   # methods with respect to current_user 
   
@@ -50,7 +52,5 @@ class User < ActiveRecord::Base
     passive_friend_requests.pending.count > 0 ? true : false 
   end
  
-
-   
 end
 

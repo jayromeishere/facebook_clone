@@ -24,5 +24,5 @@ module UsersHelper
     user.friends_from_active_requests |
     user.friends_from_passive_requests
   end
- 
+   
 end

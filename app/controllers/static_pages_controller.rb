@@ -5,9 +5,10 @@ class StaticPagesController < ApplicationController
   end
   
   def feed
-    friend_ids = []
-    friends(current_user).each { |f| friend_ids << f.id } 
-    @feed_posts = Post.where("poster_id IN (?)", friend_ids)
+    # get posts from current user AND his friends
+    feed_post_ids = [  ]
+    friends(current_user).each { |f| feed_post_ids << f.id } 
+    @feed_posts = Post.where("poster_id IN (?) OR poster_id = ?", feed_post_ids, current_user.id)
                       .order(created_at: :desc)
   end
   
