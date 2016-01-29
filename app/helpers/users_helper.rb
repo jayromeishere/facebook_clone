@@ -24,5 +24,13 @@ module UsersHelper
     user.friends_from_active_requests |
     user.friends_from_passive_requests
   end
+  
+  def notifications_excluding_self_likes_of(current_user)
+    User.joins("INNER JOIN notifications ON notifications.recipient_id = users.id
+                INNER JOIN likes ON likes.id = notifications.source_id").
+         where("likes.self_like = false OR notifications.source_type IN ('Post', 'FriendRequest') 
+               AND users.id = ? AND notifications.seen = false", current_user.id ).
+         order(created_at: :desc)
+  end
    
 end

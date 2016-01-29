@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     through: :passive_friend_requests, 
     source: :requester,
     class_name: "User"
+    
+  scope :notifications_excluding_self_likes, -> { joins("INNER JOIN notifications ON notifications.recipient_id = user.id
+                                                         INNER JOIN likes ON likes.id = notifications.source_id").
+                                                  where("likes.self_like = false OR notifications.source_type IN ('Post', 'FriendRequest')" ) }
 
 
   # methods with respect to current_user 
@@ -51,6 +55,13 @@ class User < ActiveRecord::Base
   def has_passive_friend_requests_pending?
     passive_friend_requests.pending.count > 0 ? true : false 
   end
+  
+  def notifications_excluding_self_likes_of(current_user)
+    current_user.joins("INNER JOIN notifications ON notifications.recipient_id = user.id
+                INNER JOIN likes ON likes.id = notifications.source_id").
+         where("likes.self_like = false OR notifications.source_type IN ('Post', 'FriendRequest')" )
+  end
+    
  
 end
 

@@ -1,5 +1,12 @@
 <li>
 	<%= comment.commenter.name %><%= " " %><%= comment.created_at %></br>
 	<%= comment.text %>
-	<%= link_to "Like", user_post_comment_likes_path(params[:user_id], params[:id], comment.id), method: :create %>
+	<% if comment.likers.include? current_user %>
+		<%= link_to "Unlike", user_post_comment_like_path(comment.post.poster_id, 
+														  comment.post.id, 
+														  comment.id, 
+														  current_users_like_of(comment).id), method: :delete %>
+	<% else %>
+		<%= link_to "Like", user_post_comment_likes_path(comment.post.poster_id, comment.post.id, comment.id), method: :create %>
+	<% end %>
 </li>

@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before :each do
+    @like = build(:like)
+  end
+  
+  it "is valid" do
+    expect(@like).to be_valid
+  end
+  
+  
 end

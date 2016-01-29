@@ -41,5 +41,11 @@ module Macros
     click_button "Submit"
   end
   
+  # likes
+  
+  def let_liker_like(source) 
+    source.likes.create(liker_id: @liker.id, likeable_type: source.class.name)
+  end
+  
   
 end

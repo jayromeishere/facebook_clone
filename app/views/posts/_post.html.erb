@@ -3,9 +3,14 @@
 <%= pluralize(post.likes.count, "Like") unless post.likes.count == 0 %>
 <%= pluralize(post.comments.count, "Comment") unless post.comments.count == 0 %>
 <% if post.likers.include? current_user %>
-	<%= link_to "Unlike", "#" %>
+	<%= link_to "Unlike", user_post_like_path(post.poster_id, post.id, current_users_like_of(post).id ), method: :delete %>
 <% else %>
 	<%= link_to "Like", user_post_likes_path(post.poster_id, post.id), method: :create %>
 <% end %>
 <%= link_to "Comment", new_user_post_comment_path(post.poster_id, post.id), method: :get %></br>
+<ul>
+<% post.comments.order(created_at: :asc).each do |comment| %>
+	<%= render comment %>
+<% end %>
+</ul>
 
