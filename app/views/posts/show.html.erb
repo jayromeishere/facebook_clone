@@ -1,5 +1,3 @@
 <h1>Post <%= @post.id %></h1>
 <%= render @post %>
-<ul>
-<%= render @post.comments.order(created_at: :desc) unless @post.comments == nil %>
-</ul>
+

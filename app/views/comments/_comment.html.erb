@@ -1,4 +1,4 @@
-<li>
+<li id=<%= "p_#{comment.post.id}_c_#{comment.id}"%> >
 	<%= comment.commenter.name %><%= " " %><%= comment.created_at %></br>
 	<%= comment.text %>
 	<% if comment.likers.include? current_user %>

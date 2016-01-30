@@ -9,8 +9,6 @@
 <% end %>
 <%= link_to "Comment", new_user_post_comment_path(post.poster_id, post.id), method: :get %></br>
 <ul>
-<% post.comments.order(created_at: :asc).each do |comment| %>
-	<%= render comment %>
-<% end %>
+<%= render post.comments %>
 </ul>
 

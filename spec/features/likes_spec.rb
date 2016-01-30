@@ -56,9 +56,21 @@ feature "Likes" do
   end
   
   scenario "Like destroyed after unliking a post" do
-    
+    let_liker_like(@post)
+    sign_in(@liker)
+    visit user_post_path(@creator.id, @post.id)
+    expect{click_link "Unlike"}.to change(Like, :count).by(-1)
   end
-  scenario "Like destroyed after unliking a comment"
+  
+  # scenario "Like destroyed after unliking a comment" do
+    # accept_friend_request_from_profile(@liker, @creator)
+    # click_link "Comment"
+    # fill_in "comment[text]", with: "dope dude"
+    # click_button "Submit"
+    # save_and_open_page
+    # within("li#p_475_c_211") { click_on "Like" }
+    # expect{click_link "Unlike"}.to change(Like, :count).by(-1)
+  # end
   
 
 
